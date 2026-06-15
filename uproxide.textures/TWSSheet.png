@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PackGen v1.10.0</title>
+    <link rel="icon" type="image/x-icon" href="/assets/palette.ico">
+    <meta property="og:title" content="PackGen v1.9.2"/>
+    <meta property="og:description" content="Quickly generate your very own Geometry Dash Menu Recolor!"/>
+    <meta id="meta-image" name="og:image" content="https://packgenweb.pages.dev/demoSpr.png" itemprop="image"/>
+    <meta name="twitter:card" content="summary">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="assets/packgenLogo.png" alt="PackGen" class="logo-img">
+            <p class="byline">Generator of GD Menu Recolors</p>
+            <p class="byline small">by Asterveila</p>
+            <p class="version-text">Supported GD version: 2.2081</p>
+            <br>
+            <a href="https://github.com/Asterveila/Packgen-Issues" target="_blank" aria-label="Issues Repo (placeholder sorry)">
+                <button class="top-btn changelog-btn"></button>
+            </a>
+            <a href="https://github.com/Asterveila/Packgen-Issues" target="_blank" aria-label="Issues Repo">
+                <button class="top-btn issues-btn"></button>
+            </a>
+            <a href="https://iconsgallery.pages.dev/" target="_blank" aria-label="Icon Gallery Website">
+                <button class="top-btn gallery-btn"></button>
+            </a>
+        </div>
+
+        <div class="main-content">
+            <div class="controls">
+                <div class="input-group">
+                    <label for="packName">Menu Name:</label>
+                    <input type="text" id="packName" placeholder="Enter pack name" value="My Pack">
+                </div>
+
+                <div class="input-group">
+                    <label for="primaryColor" class="lower-me">Color 1:</label>
+                    <div class="color-input-group">
+                        <input type="text" id="primaryColor" placeholder="#ff0000" value="#95e203">
+                        <div class="color-picker-btn" id="primaryColorBtn"> <input type="color" id="primaryColorPicker" value="#95e203">
+                            <div class="color-preview" id="primaryColorPreview"></div> </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="secondaryColor" class="lower-me">Color 2:</label>
+                    <div class="color-input-group">
+                        <input type="text" id="secondaryColor" placeholder="#00ff00" value="#1ce9ff">
+                        <div class="color-picker-btn" id="secondaryColorBtn"> <input type="color" id="secondaryColorPicker" value="#1ce9ff">
+                            <div class="color-preview" id="secondaryColorPreview"></div> </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="glowColor" class="lower-me">Glow Color:</label>
+                    <div class="color-input-group">
+                        <input type="text" id="glowColor" placeholder="#ffffff" value="#ffffff">
+                        <div class="color-picker-btn" id="glowColorBtn">
+                            <input type="color" id="glowColorPicker" value="#ffffff">
+                            <div class="color-preview" id="glowColorPreview"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="brightness">Brightness:</label>
+                    <input type="number" id="brightness" min="100" max="300" value="160">
+                    <div class="brightness-info">
+                        <strong>Range: 100-300</strong><br>
+                        Recommended: 150-170<br><br>
+                        100 Will give you VERY bright colors.<br>
+                        300 Will give you very dark/dull colors.
+                    </div>
+                </div>
+
+                <p class="byline">Hover over a setting to see some info about it!</p>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="includeMediumPort">
+                    <label for="includeMediumPort" title="Automatically ports your pack to Medium quality.">Include Medium Port</label>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="tintGoldFont">
+                    <label for="tintGoldFont" title="Colors the Golden Font to your secondary color.">Color GoldFont</label>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="colorDemonFaces">
+                    <label for="colorDemonFaces" title="Colors the Demon Difficulty Faces to your chosen colors.">Color Demon Faces</label>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="colorGoldTitles">
+                    <label for="colorGoldTitles" title="Colors the Golden Titles used in various menus, such as the Daily Level, Weekly Demon and Event Level titles.">Color Gold Titles</label>
+                </div>
+
+                <img src="assets/htSettings.png" title="Settings for the pack's features that use the Happy Textures mod" class="ht-settings">
+
+                <div class="input-group">
+                    <label>Custom Loading BG:</label>
+                    <input type="file" id="bgUpload" accept="image/png,image/jpeg" style="display: none;">
+                    <button id="uploadBGBtn" class="upload-img-btn"></button>
+                    <span id="bgFileName" style="margin-left: 10px; color: #aaa;"></span>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="transparentLists">
+                    <label for="transparentLists" title="Enables making level lists transparent.">Transparent Lists</label>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="colorGradientBg">
+                    <label for="colorGradientBg" title="Colors the Gradient Background used in GD Menus">Color Gradient BG</label>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="colorMainMenu">
+                    <label for="colorMainMenu" title="Colors the Main Menu's Ground/Background to both your colors.">Color Main Menu G/BG</label>
+                </div>
+
+                <img src="assets/misc.png" title="Other settings for the pack's features." class="misc-settings" width="25%" style="margin-top: -2px; margin-bottom: -8px;">
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="mythicompat">
+                    <label for="mythicompat" title="Attempts to color the Demon Difficulty Faces for the Godlike Faces mod, as well as for the Demons In Between mod. This WILL look bad, as there was no easy way to have them colored without having to remake them from scratch, which, as you can imagine, is WAY too much work... 
+                    DO NOTE THAT THIS ONLY AFFECTS LEGENDARY/MYTHIC FACES!!! DemonsInBetween has built-in compat if Color Demon Faces is enabled.">(Poorly) Color GodlikeFaces Demons</label>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="useAlternativeGlowOverlaying">
+                    <label for="useAlternativeGlowOverlaying" title="If enabled, uses a glow replacement algorithm that prevents white pixels from peeking through your custom color, but may slightly leave some gaps between the black outline and the glow, leading to some unwanted transparency. Recommended for dark glow colors where the white pixels peeking through are much more of an annoyance.">Use alternative Glow Overlaying</label>
+                </div>
+            </div>
+
+            <div class="preview-section">
+                <div class="preview-title">Preview</div>
+                <div class="preview-container" id="previewContainer">
+                    <div class="preview-placeholder">
+                        Loading...
+                    </div>
+                </div>
+            </div>
+
+            <div class="generate-section">
+                <button class="generate-btn" id="generateBtn" aria-label="Generate Texture Pack"></button>
+                 <div class="status" id="status"></div>
+             </div>
+        </div>
+    </div>
+    
+    <div class="social-links-container">
+        <a href="https://www.youtube.com/@Asterveila" target="_blank" aria-label="YouTube Channel">
+            <button class="social-btn youtube-btn"></button>
+        </a>
+        <a href="https://twitter.com/Asterveila" target="_blank" aria-label="Twitter Profile">
+            <button class="social-btn twitter-btn"></button>
+        </a>
+        <a href="https://github.com/Asterveila/Packgen-Issues" target="_blank" aria-label="Github Issues Page">
+            <button class="social-btn git-btn"></button>
+        </a>
+        <a href="https://discord.gg/dceY3uvGzD" target="_blank" aria-label="Discord Server">
+            <button class="social-btn discord-btn"></button>
+        </a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
